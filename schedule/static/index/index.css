@@ -1,0 +1,33 @@
+body{
+    font-family: Arial, sans-serif;
+    background-image: linear-gradient(to right, #fbc2eb, #a6c1ee);
+    margin: 0;
+    padding: 0;
+}
+
+button{
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+}
+input{
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    width: 60px;
+    
+    
+}
+
+h1{
+    text-align: center;
+    color: #333;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    font-size: 30px;
+    font-weight: bold;
+
+}

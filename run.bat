@@ -1,0 +1,1 @@
+python schedule\manage.py runserver
