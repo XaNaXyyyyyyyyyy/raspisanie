@@ -23,8 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('group/<int:group_id>/', views.group_schedule, name='group_schedule'),
-    path('api/events/', views.EventList.as_view(), name='event-list'),
-    path('api/events/<int:pk>/', views.EventDetail.as_view(), name='event-detail'),
+    path('api/events/', views.EventList.as_view()),
+    path('api/events/<int:pk>/', views.EventDetail.as_view()),
     
    
     
