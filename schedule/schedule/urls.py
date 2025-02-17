@@ -17,15 +17,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from schedule_app import views
+from rest_framework import routers
+from django.conf.urls import include
+
+router = routers.DefaultRouter()
+router.register(r'api/events', views.EventViewSet)
+
+
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('group/<int:group_id>/', views.group_schedule, name='group_schedule'),
-    path('api/events/', views.EventList.as_view()),
-    path('api/events/<int:pk>/', views.EventDetail.as_view()),
-    
+    path('', include(router.urls)),
    
     
     

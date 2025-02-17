@@ -92,23 +92,37 @@ def schedule_for_day(request, weekday):
 #     def delete(self, request, *args, **kwargs):
 #         return self.destroy(request, *args, **kwargs)
 
-from rest_framework.generics import get_object_or_404
-from rest_framework.response import Response
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework import status
-from .serializers import EventSerializer
+# from rest_framework.generics import get_object_or_404
+# from rest_framework.response import Response
+# from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+# from rest_framework import status
+# from .serializers import EventSerializer
 
-class EventList(ListCreateAPIView):
+# class EventList(ListCreateAPIView):
+#     queryset = Event.objects.all()
+#     serializer_class = EventSerializer
+
+#     def preform_create(self, serializer):
+#         group_id = self.kwargs.get('group_id')
+#         group = get_object_or_404(Group, id=group_id)
+#         serializer.save(group=group)
+
+#         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+# class EventDetail(RetrieveUpdateDestroyAPIView):
+#     queryset = Event.objects.all()  
+#     serializer_class = EventSerializer
+
+from rest_framework import viewsets
+from .serializers import EventSerializer
+from .models import Event
+from rest_framework.response import Response
+from rest_framework import status
+
+class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
 
-    def preform_create(self, serializer):
-        group_id = self.kwargs.get('group_id')
-        group = get_object_or_404(Group, id=group_id)
-        serializer.save(group=group)
-
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-class EventDetail(RetrieveUpdateDestroyAPIView):
-    queryset = Event.objects.all()  
+class EventDetailView(viewsets.ModelViewSet):
+    queryset = Event.objects.all()
     serializer_class = EventSerializer
