@@ -1,0 +1,7 @@
+group 1, number 1, time 11:20, date Ïîíåäåëüíèê
+group 2, number 1, time 2024-09-07 12:34:37, date Ïîíåäåëüíèê
+group 1, number 2, time 2024-09-07 12:35:56, date Monday
+group 1, number 2, time 12:50, date ÏÎÍÅÄÅËÜÍÈÊ
+group 1, number 1, time 11:00, date Tuesday
+group 1, number 1, time 123, date Monday
+group 3, number 2, time 12:50, date ÑĞÅÄÀ
