@@ -113,16 +113,45 @@ def schedule_for_day(request, weekday):
 #     queryset = Event.objects.all()  
 #     serializer_class = EventSerializer
 
-from rest_framework import viewsets
+# from rest_framework import viewsets
+# from .serializers import EventSerializer
+# from .models import Event
+# from rest_framework.response import Response
+# from rest_framework import status
+
+# class EventViewSet(viewsets.ModelViewSet):
+#     queryset = Event.objects.all()
+#     serializer_class = EventSerializer
+
+# class EventDetailView(viewsets.ModelViewSet):
+#     queryset = Event.objects.all()
+#     serializer_class = EventSerializer
+
+from rest_framework import viewsets, status
+from rest_framework.decorators import api_view 
+from rest_framework.response import Response
 from .serializers import EventSerializer
 from .models import Event
-from rest_framework.response import Response
-from rest_framework import status
 
 class EventViewSet(viewsets.ModelViewSet):
-    queryset = Event.objects.all()
+    queryset = Event.objects.select_related('group').all()
     serializer_class = EventSerializer
 
-class EventDetailView(viewsets.ModelViewSet):
-    queryset = Event.objects.all()
-    serializer_class = EventSerializer
+    @api_view(['GET'])
+    def get_events_by_group_id(request, group_id):
+        return Response(EventSerializer(Event.objects.filter(group=group_id), many=True).data)
+
+    @api_view(['POST'])
+    def create_event(request):
+        serializer = EventSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    @api_view(['PUT'])
+    def update_event(request, pk):
+        event = Event.objects.get(pk=pk)
+        serializer = EventSerializer(event, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
