@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from collections import defaultdict
-from .models import Event
+from .models import Event, Group
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -20,4 +20,15 @@ class EventSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
     
-    
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event   
+        fields = '__all__'
+
+    def create(self, validated_data):
+        return Event.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.save()
+        return instance
