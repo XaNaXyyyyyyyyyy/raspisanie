@@ -158,12 +158,19 @@ def schedule_for_day(request, weekday):
 
 from .models import Event
 from .serializers import EventSerializer
-from rest_framework import generics
+from rest_framework import mixins
+from rest_framework.viewsets import GenericViewSet
+from .permissions import IsOwnerOrReadOnly
 
-class EventList(generics.ListCreateAPIView):
-    queryset = Event.objects.all()
-    serializer_class = EventSerializer
 
-class EventDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Event.objects.all()
+class EventViewSet(mixins.ListModelMixin,
+                   mixins.CreateModelMixin,
+                   mixins.UpdateModelMixin,
+                   mixins.DestroyModelMixin,
+                   GenericViewSet,
+                   mixins.RetrieveModelMixin):
+    queryset = Event.objects.select_related('group').all()
     serializer_class = EventSerializer
+    permission_classes = [IsOwnerOrReadOnly]
+
+

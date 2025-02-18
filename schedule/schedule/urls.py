@@ -33,7 +33,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-
+from rest_framework.authtoken import views as auth_views
 from schedule_app import views
 
 
@@ -42,6 +42,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('group/<int:group_id>/', views.group_schedule, name='group_schedule'),
-    path('api/events/', views.EventList.as_view()),
-    path('api/events/<int:pk>/', views.EventDetail.as_view()),
+    path('api/events/', views.EventViewSet.as_view({'get': 'list'}), name='event-list'),
+    path('api/events/<int:pk>/', views.EventViewSet.as_view({'get': 'retrieve'}), name='event-detail'),
+    path('api-token-auth/', auth_views.obtain_auth_token, name='api_token_auth'),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

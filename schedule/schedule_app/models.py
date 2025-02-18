@@ -1,5 +1,6 @@
 from django.db import models
-
+from pygments.formatters.html import HtmlFormatter 
+from django.contrib.auth import get_user_model
 class Group(models.Model):
     name = models.CharField(max_length=100)
 
@@ -12,6 +13,12 @@ class Weekday(models.Model):
         return self.name
 
 class Event(models.Model):
+    owner = models.ForeignKey(
+        get_user_model(), 
+        on_delete=models.CASCADE,
+        related_name='products',
+        null=True
+     )
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     start_time = models.CharField(max_length=200)
